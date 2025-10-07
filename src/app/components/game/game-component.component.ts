@@ -1,4 +1,4 @@
-import { Component, inject, viewChild } from '@angular/core';
+import { Component, inject, viewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import type { Game } from '../../model/game';
 import type { Stone } from '../../model/stone';
 import type { Layout, Place } from '../../model/types';
@@ -16,6 +16,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { BoardComponent } from '../board/board.component';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { GameModeEasyPipe, GameModeStandardPipe } from '../../pipes/game-mode.pipe';
+import { NgClass } from '@angular/common';
 
 interface DocumentExtended extends Document {
 	fullScreen: boolean;
@@ -43,7 +44,7 @@ interface HTMLElementExtended extends HTMLElement {
 	host: { '(document:keydown)': 'handleKeyDownEvent($event)' },
 	imports: [
 		BoardComponent, DurationPipe, GameModeStandardPipe, GameModeEasyPipe,
-		HelpComponent, TilesInfoComponent, SettingsComponent, ChooseLayoutComponent, TranslatePipe, DialogComponent
+		HelpComponent, TilesInfoComponent, SettingsComponent, ChooseLayoutComponent, TranslatePipe, DialogComponent, NgClass
 	]
 })
 export class GameComponent {
@@ -57,6 +58,15 @@ export class GameComponent {
 	title: string = '';
 	workerService = inject(WorkerService);
 
+	// Floating dock properties
+	@ViewChildren('dockItem') dockItems!: QueryList<ElementRef>;
+	mouseX: number | null = null;
+	buttonWidth: number = 48;
+	buttonHeight: number = 48;
+	iconSize: number = 20;
+	dockContainerRef = viewChild<ElementRef>('dockContainer');
+
+	
 	constructor() {
 		this.game = this.app.game;
 		this.fullScreenEnabled = this.canFullscreen();
@@ -285,4 +295,59 @@ export class GameComponent {
 			play(0, data.order);
 		});
 	}
-}
+
+	// Floating dock mouse tracking - 简化版本
+	hoveredIndex: number | null = null;
+	private dockElement: HTMLElement | null = null;
+	private itemElements: HTMLElement[] = [];
+
+	ngAfterViewInit(): void {
+		// 缓存 dock 元素引用
+		this.dockElement = document.querySelector('.floating-dock') as HTMLElement;
+		if (this.dockElement) {
+			this.itemElements = Array.from(this.dockElement.querySelectorAll('.dock-item, .dock-stat')) as HTMLElement[];
+		}
+	}
+
+	onDockMouseMove(event: MouseEvent): void {
+		const dockElement = this.dockElement || (event.currentTarget as HTMLElement).querySelector('.floating-dock');
+		if (dockElement) {
+			const rect = dockElement.getBoundingClientRect();
+			this.mouseX = event.clientX - rect.left;
+		}
+	}
+
+	onDockMouseLeave(): void {
+		this.mouseX = null;
+		this.hoveredIndex = null;
+	}
+
+	onItemHover(index: number): void {
+		this.hoveredIndex = index;
+	}
+
+	calculateScale(index: number): number {
+		// 如果鼠标悬停在某个项目上，给它最大缩放
+		if (this.hoveredIndex === index) {
+			return 1.5;
+		}
+
+		if (this.mouseX === null || !this.dockElement || index >= this.itemElements.length) return 1;
+
+		const itemElement = this.itemElements[index];
+		if (!itemElement) return 1;
+
+		const rect = itemElement.getBoundingClientRect();
+		const dockRect = this.dockElement.getBoundingClientRect();
+		const itemCenter = rect.left - dockRect.left + rect.width / 2;
+		const distance = Math.abs(this.mouseX! - itemCenter);
+		const maxDistance = 150;
+
+		if (distance < maxDistance) {
+			return 1 + (1 - distance / maxDistance) * 0.5; // 1.0 到 1.5 的缩放范围
+		}
+
+		return 1;
+	}
+
+	}

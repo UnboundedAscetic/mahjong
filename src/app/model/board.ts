@@ -108,6 +108,26 @@ export class Board {
 		}
 		this.free = free;
 		this.count = count;
+		
+		// 自动计算hints以支持hint按钮状态
+		this.updateHints();
+	}
+
+	private updateHints(): void {
+		// 清除当前的hints
+		this.clearHints();
+		
+		// 如果没有可移除的牌，则不计算hints
+		if (this.free.length === 0) {
+			return;
+		}
+		
+		// 计算新的hints
+		const groups: Array<StoneGroup> = this.collectHints();
+		if (groups.length > 0) {
+			this.hints = { groups, current: groups[0] };
+			// 不要自动设置hinted状态，让用户手动触发hint
+		}
 	}
 
 	back(): void {

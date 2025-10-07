@@ -2,7 +2,7 @@
 	<div class="overlay {{className()}}" (click)="toggle();">
 		<div class="overlay-popup" (click)="$event.stopPropagation();">
 			@if (title()) {
-				<h1><i class="icon-logo"></i>{{ title() }}</h1>
+				<h1><img src="/assets/logo2.png" alt="" class="logo-image-small">{{ title() }}</h1>
 			}
 			@if (!noClose()) {
 				<a role="button" class="close" (click)="toggle()" title="{{ 'CLOSE' | translate }}"><i class="icon-cancel-circled2"></i></a>

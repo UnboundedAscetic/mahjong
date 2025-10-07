@@ -35,7 +35,7 @@ export const GameModes = [
 	}
 ];
 export type GAME_MODE_ID = 'GAME_MODE_EASY' | 'GAME_MODE_STANDARD' | 'GAME_MODE_EXPERT';
-export const GAME_MODE_ID_DEFAULT: GAME_MODE_ID = 'GAME_MODE_EXPERT';
+export const GAME_MODE_ID_DEFAULT: GAME_MODE_ID = 'GAME_MODE_STANDARD';
 
 export const Themes: Array<{ id?: string; name: string }> = [
 	{ id: 'ltgreen', name: 'THEME_LIGHT_GREEN' },
@@ -49,13 +49,19 @@ export const Themes: Array<{ id?: string; name: string }> = [
 
 export const Backgrounds: Array<{ img?: string; name: string; small?: boolean }> = [
 	{ img: undefined, name: 'BACK_NONE' },
-	{ img: 'bamboo', name: 'BACK_BAMBOO' },
-	{ img: 'blueclouds', name: 'BACK_BLUE_CLOUDS' },
-	{ img: 'grayclouds', name: 'BACK_GRAY_CLOUDS' },
-	{ img: 'grass-1', name: 'BACK_GRAY_GRASS' },
-	{ img: 'stones-1', name: 'BACK_GRAY_STONES' },
-	{ img: 'wood', name: 'BACK_GRAY_WOOD' },
-	{ img: 'wood-grain-1', name: 'BACK_GRAY_WOOD_GRAIN' }
+	// Traditional and artistic backgrounds
+	{ img: 'ancient-oriental', name: 'BACK_ANCIENT_ORIENTAL' },
+	{ img: 'auspicious-symbols', name: 'BACK_AUSPICIOUS_SYMBOLS' },
+	{ img: 'qinghua-porcelain', name: 'BACK_QINGHUA_PORCELAIN' },
+	{ img: 'cloud-brocade', name: 'BACK_CLOUD_BROCADE' },
+	{ img: 'peony-vine-prosperity', name: 'BACK_PEONY_VINE_PROSPERITY' },
+	{ img: 'peony-vine-light', name: 'BACK_PEONY_VINE_LIGHT' },
+	// Nature backgrounds
+	{ img: 'cherry-blossom', name: 'BACK_CHERRY_BLOSSOM' },
+	{ img: 'sakura', name: 'BACK_SAKURA' },
+	{ img: 'water-ripple', name: 'BACK_WATER_RIPPLE' },
+	// Modern backgrounds
+	{ img: 'digital-pattern', name: 'BACK_DIGITAL_PATTERN' }
 ];
 
 export const ImageSets = [

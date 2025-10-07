@@ -12,12 +12,29 @@
 		margin-bottom: 10px;
 		line-height: 1.3em;
 
+		.logo-image-small {
+			height: 36px;
+			width: auto;
+			vertical-align: middle;
+			margin-right: 8px;
+			background: transparent;
+			border-radius: 0;
+		}
+
 		@include mixins.respond-to(medium-down) {
 			font-size: 1.2em;
+
+			.logo-image-small {
+				height: 30px;
+			}
 		}
 
 		@include mixins.respond-to(tiny-down) {
 			font-size: 1.1em;
+
+			.logo-image-small {
+				height: 26px;
+			}
 		}
 	}
 }
