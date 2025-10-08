@@ -80,8 +80,9 @@ export const ImageSets = [
 	{ id: 'classic', type: 'PNG', name: 'Classic' }
 ];
 
-export const ImageSetDefault = 'riichi';
-export const ThemeDefault = 'ltgreen';
+export const ImageSetDefault = 'cheshire137';
+export const BackgroundDefault = 'peony-vine-light';
+export const ThemeDefault = 'white';
 export const LangAuto = 'auto';
 export const LangDefault = 'auto';
 

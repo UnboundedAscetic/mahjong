@@ -13,6 +13,10 @@
 		--main-bg-color: #19262e;
 		--main-bg-color-lt: #22353f;
 		--main-bg-color-dk: #142026;
+		--dialog-text-color: #fff;
+		--dialog-headline-color: #fff;
+		--dialog-background-color: rgba(255, 255, 255, 0.05);
+		--dialog-border-color: rgba(255, 255, 255, 0.1);
 	}
 
 	&.dkblue {
@@ -22,7 +26,10 @@
 		--main-text-color: #fff;
 		--main-text-color-lt: #ffe9c0;
 		--main-text-color-dk: #dcdbdb;
-		--dialog-text-color: #001552;
+		--dialog-text-color: #fff;
+		--dialog-headline-color: #fff;
+		--dialog-background-color: rgba(255, 255, 255, 0.05);
+		--dialog-border-color: rgba(255, 255, 255, 0.1);
 	}
 
 	&.ltblue {
@@ -32,7 +39,10 @@
 		--main-text-color: #fff;
 		--main-text-color-lt: #ffe9c0;
 		--main-text-color-dk: #dcdbdb;
-		--dialog-text-color: #34385a;
+		--dialog-text-color: #fff;
+		--dialog-headline-color: #fff;
+		--dialog-background-color: rgba(255, 255, 255, 0.05);
+		--dialog-border-color: rgba(255, 255, 255, 0.1);
 	}
 
 	&.white {
@@ -43,6 +53,9 @@
 		--main-text-color-lt: #646464;
 		--main-text-color-dk: #8c8c8c;
 		--dialog-text-color: #000;
+		--dialog-background-color: rgba(255, 255, 255, 0.95);
+		--dialog-border-color: rgba(0, 0, 0, 0.2);
+		--dialog-headline-color: #000;
 	}
 
 	&.brown {
@@ -52,13 +65,36 @@
 		--main-text-color: #fff;
 		--main-text-color-lt: #ffe9c0;
 		--main-text-color-dk: #dcdbdb;
-		--dialog-text-color: #601616;
+		--dialog-text-color: #fff;
+		--dialog-headline-color: #fff;
+		--dialog-background-color: rgba(255, 255, 255, 0.05);
+		--dialog-border-color: rgba(255, 255, 255, 0.1);
 	}
 
 	&.black {
 		--main-bg-color: #000;
 		--main-bg-color-lt: #3a3a3a;
 		--main-bg-color-dk: #171717;
+		--main-text-color: #fff;
+		--main-text-color-lt: #ffe9c0;
+		--main-text-color-dk: #dcdbdb;
+		--dialog-text-color: #fff;
+		--dialog-headline-color: #fff;
+		--dialog-background-color: rgba(255, 255, 255, 0.05);
+		--dialog-border-color: rgba(255, 255, 255, 0.1);
+	}
+
+	&.ltgreen {
+		--main-bg-color: #2d4a2d;
+		--main-bg-color-lt: #3a5f3a;
+		--main-bg-color-dk: #1f341f;
+		--main-text-color: #fff;
+		--main-text-color-lt: #e8f5e8;
+		--main-text-color-dk: #c8e0c8;
+		--dialog-text-color: #fff;
+		--dialog-headline-color: #fff;
+		--dialog-background-color: rgba(255, 255, 255, 0.05);
+		--dialog-border-color: rgba(255, 255, 255, 0.1);
 	}
 
 	.controls {

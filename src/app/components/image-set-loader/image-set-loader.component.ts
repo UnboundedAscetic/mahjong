@@ -35,7 +35,7 @@ export class ImageSetLoaderComponent implements OnChanges {
 		const s = startIndex !== -1 && endIndex !== -1 && endIndex > startIndex + 6 ?
 			svg.slice(startIndex + 6, endIndex) :
 			'';
-		return s.replace(/xlink:href="\./g, 'xlink:href="assets/svg')
+		return s.replace(/xlink:href="\./g, 'xlink:href="./assets/svg')
 			.replace(/ id="t_/g, ` id="${this.prefix()}t_`);
 	}
 

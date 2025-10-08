@@ -1,4 +1,4 @@
-import { ImageSetDefault, LangDefault, ThemeDefault } from './consts';
+import { BackgroundDefault, ImageSetDefault, LangDefault } from './consts';
 import type { SettingsStore, StorageProvider } from './types';
 
 export class Settings {
@@ -8,9 +8,8 @@ export class Settings {
 	music = false;
 	contrast = false;
 	dark = false;
-	background = '';
+	background = BackgroundDefault;
 	kyodaiUrl?: string;
-	theme = ThemeDefault;
 	stats = {
 		games: 0,
 		bestTime: 0
@@ -25,8 +24,7 @@ export class Settings {
 			if (store) {
 				this.lang = store.lang ?? LangDefault;
 				this.tileset = store.tileset ?? ImageSetDefault;
-				this.background = store.background ?? this.background;
-				this.theme = store.theme ?? ThemeDefault;
+				this.background = store.background ?? BackgroundDefault;
 				this.contrast = store.contrast ?? false;
 				this.dark = store.dark ?? false;
 				this.sounds = store.sounds ?? this.sounds;
@@ -49,7 +47,6 @@ export class Settings {
 				contrast: this.contrast,
 				dark: this.dark,
 				background: this.background,
-				theme: this.theme,
 				tileset: this.tileset,
 				kyodaiUrl: this.kyodaiUrl
 			});

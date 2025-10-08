@@ -6,6 +6,7 @@ import { expandMapping, mappingToID } from '../model/mapping';
 import { generateBase64SVG } from '../model/layout-svg';
 import type { CompactMapping, Layout, Layouts, LoadLayout, Mapping, SafeUrlSVG } from '../model/types';
 import { LocalstorageService } from './localstorage.service';
+import { AppService } from './app.service';
 
 @Injectable({ providedIn: 'root' })
 export class LayoutService {
@@ -15,6 +16,7 @@ export class LayoutService {
 	private readonly http = inject(HttpClient);
 	private readonly sanitizer = inject(DomSanitizer);
 	private readonly storage = inject(LocalstorageService);
+	private readonly app = inject(AppService);
 
 	static layout2loadLayout(layout: Layout, map: CompactMapping): LoadLayout {
 		return {
@@ -85,10 +87,14 @@ export class LayoutService {
 	}
 
 	generatePreview(mapping: Mapping): SafeUrlSVG {
-		return this.sanitizer.bypassSecurityTrustUrl(generateBase64SVG(mapping)) as SafeUrlSVG;
+		// 使用白色主题的颜色
+		const fillColor = '#f8f8f8';
+		const strokeColor = '#666';
+
+		return this.sanitizer.bypassSecurityTrustUrl(generateBase64SVG(mapping, fillColor, strokeColor)) as SafeUrlSVG;
 	}
 
 	private async requestBoards(): Promise<Array<LoadLayout>> {
-		return firstValueFrom(this.http.get<Array<LoadLayout>>('assets/data/boards.json'));
+		return firstValueFrom(this.http.get<Array<LoadLayout>>('./assets/data/boards.json'));
 	}
 }

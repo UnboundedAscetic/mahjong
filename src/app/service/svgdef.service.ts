@@ -30,7 +30,7 @@ export class SvgdefService {
 		item = {};
 		const request = new Promise<string>((resolve, reject) => {
 			setTimeout(() => {
-				this.http.get(`assets/svg/${name}.svg`, { responseType: 'text' })
+				this.http.get(`./assets/svg/${name}.svg`, { responseType: 'text' })
 					.subscribe({
 						next: result => {
 							item.data = result;

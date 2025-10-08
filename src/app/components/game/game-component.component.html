@@ -1,33 +1,3 @@
-<!-- 顶部透明菜单栏 -->
-<div class="top-menu-container">
-
-	<!-- 菜单内容 -->
-	<div class="controls controls-top">
-		<div class="ctrl ctrl-name">
-			<button class="link button" (click)="help.toggle()" title="{{'OPEN_HELP' | translate}}">
-				<img src="/assets/logo2.png" alt="Free Mahjong Games" class="logo-image">
-			</button>
-		</div>
-		<div class="ctrl ctrl-game">
-			<!-- 隐藏暂停和新游戏按钮，因为已移至左下角浮动菜单 -->
-			<button class="link button" style="display: none;" (click)="game.toggle()" title="{{'PAUSE_LONG' | translate}}">
-				<i class="icon-pause"></i> <span class="label">{{ 'PAUSE' | translate }}</span>
-			</button>
-			<button class="link button feature" style="display: none;" [class.enabled]="game.mode | gameModeEasy" (click)="game.shuffle()" title="{{'SHUFFLE_LONG' | translate}}">
-				<i class="icon-spin1"></i> <span class="label">{{ 'SHUFFLE' | translate }}</span>
-			</button>
-			<button class="link button feature" style="display: none;" [class.enabled]="game.mode | gameModeStandard" (click)="game.back()" title="{{'UNDO_LONG' | translate}}" [attr.disabled]="game.board.undo.length===0 ? true : null">
-				<i class="icon-undo"></i> <span class="label">{{ 'UNDO' | translate }}</span>
-			</button>
-			<button class="link button feature" style="display: none;" [class.enabled]="game.mode | gameModeStandard" (click)="game.hint()" title="{{'HINT_LONG' | translate}}">
-				<i class="icon-lightbulb"></i> <span class="label">{{ 'HINT' | translate }}</span>
-			</button>
-			<button class="link button" style="display: none;" (click)="newGame()" title="{{'RESTART_LONG' | translate}}">
-				<i class="icon-loop"></i> <span class="label">{{ 'RESTART' | translate }}</span>
-			</button>
-		</div>
-	</div>
-</div>
 <app-board class="board"
 					 [stones]="game.board.stones"
 					 [imageSet]="app.settings.tileset"

@@ -1,5 +1,5 @@
 import { Settings } from './settings';
-import { ImageSetDefault, LangDefault, ThemeDefault } from './consts';
+import { ImageSetDefault, LangDefault } from './consts';
 import type { SettingsStore, StorageProvider } from './types';
 
 describe('Settings', () => {
@@ -34,7 +34,6 @@ describe('Settings', () => {
 			expect(settings.contrast).toBe(false);
 			expect(settings.dark).toBe(false);
 			expect(settings.background).toBe('');
-			expect(settings.theme).toBe(ThemeDefault);
 			expect(settings.stats).toEqual({
 				games: 0,
 				bestTime: 0
@@ -51,7 +50,6 @@ describe('Settings', () => {
 				contrast: true,
 				dark: true,
 				background: 'test-background',
-				theme: 'test-theme',
 				tileset: 'test-tileset',
 				kyodaiUrl: 'test-url'
 			};
@@ -67,7 +65,6 @@ describe('Settings', () => {
 			expect(settings.contrast).toBe(true);
 			expect(settings.dark).toBe(true);
 			expect(settings.background).toBe('test-background');
-			expect(settings.theme).toBe('test-theme');
 			expect(settings.tileset).toBe('test-tileset');
 			expect(settings.kyodaiUrl).toBe('test-url');
 		});
@@ -82,7 +79,6 @@ describe('Settings', () => {
 			expect(result).toBe(true);
 			expect(settings.lang).toBe(LangDefault);
 			expect(settings.tileset).toBe(ImageSetDefault);
-			expect(settings.theme).toBe(ThemeDefault);
 			expect(settings.background).toBe('test-background');
 		});
 
@@ -108,7 +104,6 @@ describe('Settings', () => {
 			settings.contrast = true;
 			settings.dark = true;
 			settings.background = 'test-background';
-			settings.theme = 'test-theme';
 			settings.tileset = 'test-tileset';
 			settings.kyodaiUrl = 'test-url';
 
@@ -122,7 +117,6 @@ describe('Settings', () => {
 				contrast: true,
 				dark: true,
 				background: 'test-background',
-				theme: 'test-theme',
 				tileset: 'test-tileset',
 				kyodaiUrl: 'test-url'
 			});

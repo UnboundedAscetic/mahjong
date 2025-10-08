@@ -9,20 +9,20 @@ html {
 	--main-bg-color: #2b424f;
 	--main-bg-color-lt: #2e4856;
 	--main-bg-color-dk: #253c46;
-	--main-text-color: #47b00a;
-	--main-text-color-hover: #358808;
-	--main-text-color-lt: #51ca0a;
-	--main-text-color-dk: #358808;
+	--main-text-color: #4a9eff;
+	--main-text-color-hover: #6bb3ff;
+	--main-text-color-lt: #8ac7ff;
+	--main-text-color-dk: #3d8ce6;
 	--main-content-text-color: #000;
 	--main-content-text-color-muted: #272727;
 	--main-content-link-color: #2e4856;
 	--main-content-link-hover-color: #22353f;
-	--dialog-headline-color: #2e8c02;
-	--dialog-text-color: #000;
-	--dialog-background-color: #f5f1e4;
-	--dialog-border-color: #0d1417;
-	--dialog-border-color-hover: #2e4856;
-	--dialog-border-color-selected: yellow;
+	--dialog-headline-color: var(--main-text-color);
+	--dialog-text-color: var(--main-text-color);
+	--dialog-background-color: rgba(255, 255, 255, 0.05);
+	--dialog-border-color: rgba(255, 255, 255, 0.1);
+	--dialog-border-color-hover: rgba(255, 255, 255, 0.2);
+	--dialog-border-color-selected: rgba(255, 255, 255, 0.3);
 	--card-layout-color-border-selected: #000;
 	--card-layout-color-border: #afafaf;
 	--card-layout-color-bg: #2b424f;
@@ -58,9 +58,9 @@ html {
 
 @media (prefers-color-scheme: dark) {
 	html {
-		--dialog-headline-color: #47b00a;
-		--dialog-background-color: #1b1b1b;
-		--dialog-border-color: #2f444d;
+		--dialog-headline-color: var(--main-text-color);
+		--dialog-background-color: rgba(255, 255, 255, 0.05);
+		--dialog-border-color: rgba(255, 255, 255, 0.1);
 		--card-layout-color-border: #353535;
 		--main-content-text-color: #ddd;
 		--main-content-text-color-muted: #959494;
@@ -132,18 +132,22 @@ p {
 	background-color: rgb(0 0 0 / 20%);
 	max-height: 100%;
 	font-size: variables.$base-font-size * 0.9;
+	animation: overlayFadeIn 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
 	button, select {
-		background-color: var(--input-background-color);
-		border-color: var(--input-border-color);
-		color: var(--input-text-color);
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		color: var(--main-text-color);
 		text-overflow: ellipsis;
 		padding: 8px 12px;
 		font-size: 0.9em;
 		cursor: pointer;
+		border-radius: 8px;
+		transition: all 0.2s ease-in-out;
 
 		&:hover, &:active {
-			background-color: var(--input-background-color-hover);
+			background: rgba(255, 255, 255, 0.12);
+			border-color: rgba(255, 255, 255, 0.25);
 		}
 	}
 
@@ -171,19 +175,23 @@ p {
 		position: fixed;
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%) scale(0.9);
 		max-height: 98%;
 		max-width: 98%;
 		margin-left: auto;
 		margin-right: auto;
 		border: 1px solid var(--dialog-border-color);
-		background-color: var(--dialog-background-color);
+		background: var(--dialog-background-color);
+		backdrop-filter: blur(20px);
 		line-height: 1.2em;
 		padding: 1.5em 2em;
 		display: flex;
 		flex-direction: column;
-		border-radius: 12px;
-		box-shadow: var(--overlay-popup-shadow);
+		border-radius: 24px;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+		opacity: 0;
+		transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+		animation: popupFadeIn 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 
 		.icon-logo {
 			color: red;
@@ -212,20 +220,34 @@ p {
 	}
 
 	.close {
-		right: 8px;
-		top: 8px;
+		right: 12px;
+		top: 12px;
 		position: absolute;
-		color: var(--close-color);
+		color: var(--main-text-color);
 		cursor: pointer;
-		padding: 3px;
-		border-radius: 6px;
+		width: 36px;
+		height: 36px;
+		border-radius: 18px;
+		background: var(--dialog-background-color);
+		border: 1px solid var(--dialog-border-color);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s ease-in-out;
 
 		i {
-			font-size: 1.2em;
+			font-size: 16px;
+			opacity: 0.7;
 		}
 
 		&:hover {
-			color: var(--close-color-hover)
+			background: var(--dialog-border-color-hover);
+			border-color: var(--dialog-border-color-selected);
+			transform: scale(1.1);
+
+			i {
+				opacity: 0.9;
+			}
 		}
 	}
 
@@ -293,4 +315,25 @@ p {
 	display: block;
 	clear: both;
 	content: '';
+}
+
+// 动画关键帧
+@keyframes overlayFadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes popupFadeIn {
+	from {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0.9);
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
 }

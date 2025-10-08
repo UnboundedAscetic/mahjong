@@ -18,6 +18,8 @@
     "build:apps": "npm run build:prebuild && ng build --configuration apps --aot --base-href \".\"",
     "build:deploy-root": "npm run build:prebuild && ng build --configuration production --aot --base-href \"/\"",
     "build:deploy-ghpages": "npm run build:prebuild && ng build --configuration production --aot --base-href \"https://ffalt.github.io/mah/\"",
+    "build:static": "npm run clean && ng build --configuration production --aot",
+    "preview:static": "cd dist && npx --yes serve@latest -s -l 5000",
     "analyze": "npm run build:stats && npx -y @angular-experts/hawkeye dist/stats.json",
     "release": "npx -y commit-and-tag-version -a",
     "update:angular": "ng update @angular/cli @angular/core",

@@ -17,7 +17,7 @@ export class Sound {
 		}
 		if (!this.audioplayers[sound]) {
 			const audio = new Audio();
-			audio.src = `assets/sounds/${sound}.ogg`;
+			audio.src = `./assets/sounds/${sound}.ogg`;
 			audio.load();
 			this.audioplayers[sound] = audio;
 		}

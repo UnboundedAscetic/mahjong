@@ -20,7 +20,6 @@ export class SettingsComponent {
 	kyodaiTileSets = KyodaiTileSets;
 	sets = ImageSets;
 	backs = Backgrounds;
-	themes = Themes;
 	languages = Object.keys(LANGUAGES).map(key => ({ key, title: LANGUAGES[key].title }));
 	app = inject(AppService);
 	private readonly storage = inject(LocalstorageService);

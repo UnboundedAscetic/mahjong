@@ -32,6 +32,7 @@
 						"tsConfig": "tsconfig.app.json",
 						"assets": [
 							"src/favicon.ico",
+							"src/404.html",
 							"src/assets"
 						],
 						"styles": [
@@ -41,7 +42,8 @@
 							"src/styles.scss"
 						],
 						"scripts": [],
-						"webWorkerTsConfig": "tsconfig.worker.json"
+						"webWorkerTsConfig": "tsconfig.worker.json",
+						"baseHref": "./"
 					},
 					"configurations": {
 						"production": {
@@ -60,13 +62,13 @@
 							"budgets": [
 								{
 									"type": "initial",
-									"maximumWarning": "1mb",
+									"maximumWarning": "2mb",
 									"maximumError": "5mb"
 								},
 								{
 									"type": "anyComponentStyle",
-									"maximumWarning": "7kb",
-									"maximumError": "10kb"
+									"maximumWarning": "20kb",
+									"maximumError": "30kb"
 								}
 							]
 						},
@@ -86,13 +88,13 @@
 							"budgets": [
 								{
 									"type": "initial",
-									"maximumWarning": "1mb",
+									"maximumWarning": "2mb",
 									"maximumError": "5mb"
 								},
 								{
 									"type": "anyComponentStyle",
-									"maximumWarning": "7kb",
-									"maximumError": "10kb"
+									"maximumWarning": "20kb",
+									"maximumError": "30kb"
 								}
 							]
 						},

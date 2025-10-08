@@ -497,6 +497,6 @@ export class BoardComponent implements OnInit, OnChanges {
 
 	private updateBackground(background: string): void {
 		const image = Backgrounds.find(b => b.img === background)?.img;
-		this.backgroundUrl = image ? `url("assets/img/${image}.${this.backgroundFormat()}")` : undefined;
+		this.backgroundUrl = image ? `url("./assets/img/${image}.${this.backgroundFormat()}")` : undefined;
 	}
 }
