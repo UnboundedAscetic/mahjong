@@ -5,153 +5,230 @@
 					 [background]="app.settings.background"
 					 (clickEvent)="stoneClick($event)"
 />
-<div class="floating-dock-container" 
-     (mousemove)="onDockMouseMove($event)" 
-     (mouseleave)="onDockMouseLeave()">
-	<div class="floating-dock">
-		<!-- 功能按钮组 -->
-		<div class="dock-item" 
-			 (mouseenter)="onItemHover(0)"
-			 [style.transform]="'scale(' + calculateScale(0) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<button class="dock-button" 
-					(click)="settings.toggle()">
-				<i class="icon-cog"></i>
-				<span class="dock-tooltip" 
-					  [class.visible]="hoveredIndex === 0">
-					{{'SETTINGS' | translate}}
-				</span>
-			</button>
-		</div>
-		
-		<div class="dock-item" 
-			 (mouseenter)="onItemHover(1)"
-			 [style.transform]="'scale(' + calculateScale(1) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<button class="dock-button" 
-					[class.inactive]="!app.settings.sounds"
-					(click)="app.toggleSound()">
-				<i class="icon-volume-low"></i>
-				<span class="dock-tooltip" 
-					  [class.visible]="hoveredIndex === 1">
-					{{'AUDIO_SOUNDS' | translate}}
-				</span>
-			</button>
-		</div>
-		
-		<div class="dock-item" 
-			 (mouseenter)="onItemHover(2)"
-			 [style.transform]="'scale(' + calculateScale(2) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<button class="dock-button" 
-					(click)="game.toggle()">
-				<i class="icon-pause"></i>
-				<span class="dock-tooltip" 
-					  [class.visible]="hoveredIndex === 2">
-					{{'PAUSE' | translate}}
-				</span>
-			</button>
-		</div>
-		
-		<div class="dock-item" 
-			 (mouseenter)="onItemHover(3)"
-			 [style.transform]="'scale(' + calculateScale(3) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<button class="dock-button" 
-					(click)="newGame()">
-				<i class="icon-loop"></i>
-				<span class="dock-tooltip" 
-					  [class.visible]="hoveredIndex === 3">
-					{{'RESTART' | translate}}
-				</span>
-			</button>
-		</div>
 
-		<!-- 分隔线 -->
-		<div class="dock-separator"></div>
+<!-- 大屏幕：保持当前状态 -->
+<div class="large-screen-menu">
+	<!-- 左下角功能按钮 -->
+	<div class="floating-dock-container" 
+		 (mousemove)="onDockMouseMove($event)" 
+		 (mouseleave)="onDockMouseLeave()">
+		<div class="floating-dock">
+			<!-- 功能按钮组 -->
+			<div class="dock-item" 
+				 (mouseenter)="onItemHover(0)"
+				 [style.transform]="'scale(' + calculateScale(0) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<button class="dock-button" 
+						(click)="settings.toggle()">
+					<i class="icon-cog"></i>
+					<span class="dock-tooltip" 
+						  [class.visible]="hoveredIndex === 0">
+						{{'SETTINGS' | translate}}
+					</span>
+				</button>
+			</div>
+			
+			<div class="dock-item" 
+				 (mouseenter)="onItemHover(1)"
+				 [style.transform]="'scale(' + calculateScale(1) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<button class="dock-button" 
+						[class.inactive]="!app.settings.sounds"
+						(click)="app.toggleSound()">
+					<i class="icon-volume-low"></i>
+					<span class="dock-tooltip" 
+						  [class.visible]="hoveredIndex === 1">
+						{{'AUDIO_SOUNDS' | translate}}
+					</span>
+				</button>
+			</div>
+			
+			<div class="dock-item" 
+				 (mouseenter)="onItemHover(2)"
+				 [style.transform]="'scale(' + calculateScale(2) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<button class="dock-button" 
+						(click)="game.toggle()">
+					<i class="icon-pause"></i>
+					<span class="dock-tooltip" 
+						  [class.visible]="hoveredIndex === 2">
+						{{'PAUSE' | translate}}
+					</span>
+				</button>
+			</div>
+			
+			<div class="dock-item" 
+				 (mouseenter)="onItemHover(3)"
+				 [style.transform]="'scale(' + calculateScale(3) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<button class="dock-button" 
+						(click)="newGame()">
+					<i class="icon-loop"></i>
+					<span class="dock-tooltip" 
+						  [class.visible]="hoveredIndex === 3">
+						{{'RESTART' | translate}}
+					</span>
+				</button>
+			</div>
 
-		<!-- 功能按钮 -->
-		<div class="dock-item" 
-			 (mouseenter)="onItemHover(4)"
-			 [style.transform]="'scale(' + calculateScale(4) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<button class="dock-button" 
-					[ngClass]="{ inactive: (game.mode | gameModeEasy) === false }"
-					[attr.disabled]="(game.mode | gameModeEasy) === false ? true : null"
-					(click)="game.shuffle()">
-				<i class="icon-spin1"></i>
-				<span class="dock-tooltip" 
-					  [class.visible]="hoveredIndex === 4">
-					{{'SHUFFLE' | translate}}
-				</span>
-			</button>
+			<!-- 分隔线 -->
+			<div class="dock-separator"></div>
+
+			<!-- 功能按钮 -->
+			<div class="dock-item" 
+				 (mouseenter)="onItemHover(4)"
+				 [style.transform]="'scale(' + calculateScale(4) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<button class="dock-button" 
+						[ngClass]="{ inactive: (game.mode | gameModeEasy) === false }"
+						[attr.disabled]="(game.mode | gameModeEasy) === false ? true : null"
+						(click)="game.shuffle()">
+					<i class="icon-spin1"></i>
+					<span class="dock-tooltip" 
+						  [class.visible]="hoveredIndex === 4">
+						{{'SHUFFLE' | translate}}
+					</span>
+				</button>
+			</div>
+			
+			<div class="dock-item" 
+				 (mouseenter)="onItemHover(5)"
+				 [style.transform]="'scale(' + calculateScale(5) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<button class="dock-button" 
+						[ngClass]="{ inactive: (game.mode | gameModeStandard) === false || game.board.hints.groups.length === 0 }"
+						[attr.disabled]="(game.mode | gameModeStandard) === false || game.board.hints.groups.length === 0 ? true : null"
+						(click)="game.hint()">
+					<i class="icon-lightbulb"></i>
+					<span class="dock-tooltip" 
+						  [class.visible]="hoveredIndex === 5">
+						{{'HINT' | translate}}
+					</span>
+				</button>
+			</div>
+			
+			<div class="dock-item" 
+				 (mouseenter)="onItemHover(6)"
+				 [style.transform]="'scale(' + calculateScale(6) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<button class="dock-button" 
+						[ngClass]="{ inactive: (game.mode | gameModeStandard) === false || game.board.undo.length === 0 }"
+						[attr.disabled]="(game.mode | gameModeStandard) === false || game.board.undo.length === 0 ? true : null"
+						(click)="game.back()">
+					<i class="icon-undo"></i>
+					<span class="dock-tooltip" 
+						  [class.visible]="hoveredIndex === 6">
+						{{'UNDO' | translate}}
+					</span>
+				</button>
+			</div>
 		</div>
-		
-		<div class="dock-item" 
-			 (mouseenter)="onItemHover(5)"
-			 [style.transform]="'scale(' + calculateScale(5) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<button class="dock-button" 
-					[ngClass]="{ inactive: (game.mode | gameModeStandard) === false || game.board.hints.groups.length === 0 }"
-					[attr.disabled]="(game.mode | gameModeStandard) === false || game.board.hints.groups.length === 0 ? true : null"
-					(click)="game.hint()">
-				<i class="icon-lightbulb"></i>
-				<span class="dock-tooltip" 
-					  [class.visible]="hoveredIndex === 5">
-					{{'HINT' | translate}}
-				</span>
-			</button>
-		</div>
-		
-		<div class="dock-item" 
-			 (mouseenter)="onItemHover(6)"
-			 [style.transform]="'scale(' + calculateScale(6) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<button class="dock-button" 
-					[ngClass]="{ inactive: (game.mode | gameModeStandard) === false || game.board.undo.length === 0 }"
-					[attr.disabled]="(game.mode | gameModeStandard) === false || game.board.undo.length === 0 ? true : null"
-					(click)="game.back()">
-				<i class="icon-undo"></i>
-				<span class="dock-tooltip" 
-					  [class.visible]="hoveredIndex === 6">
-					{{'UNDO' | translate}}
-				</span>
-			</button>
+	</div>
+
+	<!-- 右下角统计信息 -->
+	<div class="floating-stats-container">
+		<div class="floating-stats">
+			<div class="stat-item" 
+				 (mouseenter)="onItemHover(7)"
+				 [style.transform]="'scale(' + calculateScale(7) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<i class="icon-cubes"></i>
+				<span class="stat-label">{{ game.board.count }}</span>
+				<span class="stat-tooltip" 
+					  [class.visible]="hoveredIndex === 7">{{'STONES' | translate}}</span>
+			</div>
+			
+			<div class="stat-item" 
+				 (mouseenter)="onItemHover(8)"
+				 [style.transform]="'scale(' + calculateScale(8) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<i class="icon-check"></i>
+				<span class="stat-label">{{ game.board.free.length }}</span>
+				<span class="stat-tooltip" 
+					  [class.visible]="hoveredIndex === 8">{{'FREE' | translate}}</span>
+			</div>
+			
+			<div class="stat-item" 
+				 (mouseenter)="onItemHover(9)"
+				 [style.transform]="'scale(' + calculateScale(9) + ')'"
+				 [style.transform-origin]="'bottom center'">
+				<i class="icon-clock"></i>
+				<span class="stat-label">{{ game.clock.elapsed | duration }}</span>
+				<span class="stat-tooltip" 
+					  [class.visible]="hoveredIndex === 9">{{'TIME' | translate}}</span>
+			</div>
 		</div>
 	</div>
 </div>
 
-<!-- 右下角统计信息 -->
-<div class="floating-stats-container">
-	<div class="floating-stats">
-		<div class="stat-item" 
-			 (mouseenter)="onItemHover(7)"
-			 [style.transform]="'scale(' + calculateScale(7) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<i class="icon-cubes"></i>
-			<span class="stat-label">{{ game.board.count }}</span>
-			<span class="stat-tooltip" 
-				  [class.visible]="hoveredIndex === 7">{{'STONES' | translate}}</span>
-		</div>
-		
-		<div class="stat-item" 
-			 (mouseenter)="onItemHover(8)"
-			 [style.transform]="'scale(' + calculateScale(8) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<i class="icon-check"></i>
-			<span class="stat-label">{{ game.board.free.length }}</span>
-			<span class="stat-tooltip" 
-				  [class.visible]="hoveredIndex === 8">{{'FREE' | translate}}</span>
-		</div>
-		
-		<div class="stat-item" 
-			 (mouseenter)="onItemHover(9)"
-			 [style.transform]="'scale(' + calculateScale(9) + ')'"
-			 [style.transform-origin]="'bottom center'">
-			<i class="icon-clock"></i>
-			<span class="stat-label">{{ game.clock.elapsed | duration }}</span>
-			<span class="stat-tooltip" 
-				  [class.visible]="hoveredIndex === 9">{{'TIME' | translate}}</span>
+<!-- 小屏幕：悬浮球 + 浮动菜单 -->
+<div class="small-screen-menu">
+	<!-- 悬浮球 -->
+	<div class="floating-ball" 
+		 (click)="toggleFloatingMenu()"
+		 [class.active]="floatingMenuVisible">
+		<i class="icon-menu"></i>
+	</div>
+
+	<!-- 浮动菜单面板 -->
+	<div class="floating-menu-panel" 
+		 [class.visible]="floatingMenuVisible"
+		 (click)="closeFloatingMenuOnBackdrop($event)">
+		<div class="menu-content" (click)="$event.stopPropagation()">
+			<!-- 统计信息区域 -->
+			<div class="panel-stats">
+				<div class="panel-stat">
+					<i class="icon-cubes"></i>
+					<span>{{ game.board.count }}</span>
+				</div>
+				<div class="panel-stat">
+					<i class="icon-check"></i>
+					<span>{{ game.board.free.length }}</span>
+				</div>
+				<div class="panel-stat">
+					<i class="icon-clock"></i>
+					<span>{{ game.clock.elapsed | duration }}</span>
+				</div>
+			</div>
+
+			<!-- 分隔线 -->
+			<div class="panel-separator"></div>
+
+			<!-- 功能按钮区域 -->
+			<div class="panel-buttons">
+				<button class="panel-btn" (click)="settings.toggle()">
+					<i class="icon-cog"></i>
+				</button>
+				<button class="panel-btn" 
+						[class.inactive]="!app.settings.sounds"
+						(click)="app.toggleSound()">
+					<i class="icon-volume-low"></i>
+				</button>
+				<button class="panel-btn" (click)="game.toggle()">
+					<i class="icon-pause"></i>
+				</button>
+				<button class="panel-btn" (click)="newGame()">
+					<i class="icon-loop"></i>
+				</button>
+				<button class="panel-btn" 
+						[ngClass]="{ inactive: (game.mode | gameModeEasy) === false }"
+						[attr.disabled]="(game.mode | gameModeEasy) === false ? true : null"
+						(click)="game.shuffle()">
+					<i class="icon-spin1"></i>
+				</button>
+				<button class="panel-btn" 
+						[ngClass]="{ inactive: (game.mode | gameModeStandard) === false || game.board.hints.groups.length === 0 }"
+						[attr.disabled]="(game.mode | gameModeStandard) === false || game.board.hints.groups.length === 0 ? true : null"
+						(click)="game.hint()">
+					<i class="icon-lightbulb"></i>
+				</button>
+				<button class="panel-btn" 
+						[ngClass]="{ inactive: (game.mode | gameModeStandard) === false || game.board.undo.length === 0 }"
+						[attr.disabled]="(game.mode | gameModeStandard) === false || game.board.undo.length === 0 ? true : null"
+						(click)="game.back()">
+					<i class="icon-undo"></i>
+				</button>
+			</div>
 		</div>
 	</div>
 </div>

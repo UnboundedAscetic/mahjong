@@ -424,7 +424,8 @@ export class BoardComponent implements OnInit, OnChanges {
 	setTransform() {
 		const scaling = this.scale > 1 ? ` scale(${this.scale})` : '';
 		this.transformSVG = `translate(${this.panX}px, ${this.panY}px)${scaling}`;
-		this.transformStage = this.rotate ? 'rotate(90)' : '';
+		// 竖屏模式下不旋转内容，而是通过viewBox调整
+		this.transformStage = '';
 	}
 
 	// Helper method to calculate distance between two touch points

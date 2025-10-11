@@ -301,6 +301,9 @@ export class GameComponent {
 	private dockElement: HTMLElement | null = null;
 	private itemElements: HTMLElement[] = [];
 
+	// Floating menu properties for small screens
+	floatingMenuVisible: boolean = false;
+
 	ngAfterViewInit(): void {
 		// 缓存 dock 元素引用
 		this.dockElement = document.querySelector('.floating-dock') as HTMLElement;
@@ -324,6 +327,18 @@ export class GameComponent {
 
 	onItemHover(index: number): void {
 		this.hoveredIndex = index;
+	}
+
+	// Floating menu methods for small screens
+	toggleFloatingMenu(): void {
+		this.floatingMenuVisible = !this.floatingMenuVisible;
+	}
+
+	closeFloatingMenuOnBackdrop(event: MouseEvent): void {
+		// Only close if clicking on the backdrop (outside menu-content)
+		if (event.target === event.currentTarget) {
+			this.floatingMenuVisible = false;
+		}
 	}
 
 	calculateScale(index: number): number {

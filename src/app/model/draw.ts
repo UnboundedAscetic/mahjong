@@ -48,20 +48,42 @@ export function sortDrawItems(items: Array<Draw>): Array<Draw> {
 }
 
 export function getDrawBoundsViewPort(bounds: Array<number>, rotate: boolean = false): string {
-	const b: Array<number> = rotate ?
-		[
-			-bounds[3] - CONSTS.tileHeight - 10,
-			-bounds[0] - 30,
-			bounds[3] + CONSTS.tileHeight - 10,
-			bounds[2] + bounds[0] + CONSTS.tileWidth + 120
-		] :
-		[
-			bounds[0] - 40,
-			bounds[1] - 20,
-			bounds[2] + CONSTS.tileHeight + 40,
-			bounds[3] + CONSTS.tileHeight + 20
+	if (rotate) {
+		// 竖屏模式：要让内容变小，需要增大viewBox的尺寸
+		const width = bounds[2] - bounds[0];
+		const height = bounds[3] - bounds[1];
+		
+		// 获取屏幕实际尺寸
+		const screenWidth = window.innerWidth || 375;
+		const screenHeight = window.innerHeight || 667;
+		
+		// 计算合适的放大倍数（让viewBox变大，内容就变小）
+		// 目标是让内容适合屏幕，所以需要让viewBox比原尺寸大
+		const scaleX = screenHeight / height; // 竖屏高度作为基准
+		const scaleY = screenWidth / width;  // 竖屏宽度作为基准
+		const enlargeScale = Math.max(scaleX, scaleY) * 1.4; // 进一步增大确保右侧不溢出
+		
+		// 计算放大后的viewBox尺寸（内容会相应缩小）
+		const finalWidth = width * enlargeScale;
+		const finalHeight = height * enlargeScale;
+		
+		// 调整位置来居中显示，稍微偏左以避免右侧溢出
+		const centerX = (bounds[0] + bounds[2]) / 2;
+		const centerY = (bounds[1] + bounds[3]) / 2;
+		const portraitX = centerX - finalWidth / 2 - 35; // 进一步增加左偏移，实现完美居中
+		const portraitY = centerY - finalHeight / 2;
+		
+		return `${portraitX} ${portraitY} ${finalWidth} ${finalHeight}`;
+	} else {
+		// 大屏幕模式：要缩小牌堆，需要增大viewBox尺寸
+		const b = [
+			bounds[0] - 80,        // 左边界向外扩展
+			bounds[1] - 120,       // 上边界向外扩展，为顶部留出空间
+			bounds[2] + CONSTS.tileHeight + 120,  // 右边界向外扩展
+			bounds[3] + CONSTS.tileHeight + 200   // 下边界向外扩展200px，为底部留出更多空间
 		];
-	return b.join(' ');
+		return b.join(' ');
+	}
 }
 
 export function getDrawViewPort(items: Array<Draw>, width: number, height: number, rotate: boolean = false): string {
