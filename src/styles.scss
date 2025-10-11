@@ -19,7 +19,7 @@ html {
 	--main-content-link-hover-color: #22353f;
 	--dialog-headline-color: var(--main-text-color);
 	--dialog-text-color: var(--main-text-color);
-	--dialog-background-color: rgba(255, 255, 255, 0.05);
+	--dialog-background-color: rgba(255, 255, 255, 0.15);
 	--dialog-border-color: rgba(255, 255, 255, 0.1);
 	--dialog-border-color-hover: rgba(255, 255, 255, 0.2);
 	--dialog-border-color-selected: rgba(255, 255, 255, 0.3);
@@ -59,7 +59,7 @@ html {
 @media (prefers-color-scheme: dark) {
 	html {
 		--dialog-headline-color: var(--main-text-color);
-		--dialog-background-color: rgba(255, 255, 255, 0.05);
+		--dialog-background-color: rgba(255, 255, 255, 0.15);
 		--dialog-border-color: rgba(255, 255, 255, 0.1);
 		--card-layout-color-border: #353535;
 		--main-content-text-color: #ddd;
@@ -180,15 +180,15 @@ p {
 		max-width: 98%;
 		margin-left: auto;
 		margin-right: auto;
-		border: 1px solid var(--dialog-border-color);
+		border: 1px solid rgba(255, 255, 255, 0.18);
 		background: var(--dialog-background-color);
-		backdrop-filter: blur(20px);
+		backdrop-filter: saturate(180%) brightness(1.1) blur(30px);
 		line-height: 1.2em;
 		padding: 1.5em 2em;
 		display: flex;
 		flex-direction: column;
 		border-radius: 24px;
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
 		opacity: 0;
 		transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 		animation: popupFadeIn 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
@@ -229,7 +229,7 @@ p {
 		height: 36px;
 		border-radius: 18px;
 		background: var(--dialog-background-color);
-		border: 1px solid var(--dialog-border-color);
+		border: 1px solid rgba(255, 255, 255, 0.18);
 		display: flex;
 		align-items: center;
 		justify-content: center;

@@ -15,8 +15,8 @@
 		--main-bg-color-dk: #142026;
 		--dialog-text-color: #fff;
 		--dialog-headline-color: #fff;
-		--dialog-background-color: rgba(255, 255, 255, 0.05);
-		--dialog-border-color: rgba(255, 255, 255, 0.1);
+		--dialog-background-color: rgba(255, 255, 255, 0.08);
+		--dialog-border-color: rgba(255, 255, 255, 0.15);
 	}
 
 	&.dkblue {
@@ -28,8 +28,8 @@
 		--main-text-color-dk: #dcdbdb;
 		--dialog-text-color: #fff;
 		--dialog-headline-color: #fff;
-		--dialog-background-color: rgba(255, 255, 255, 0.05);
-		--dialog-border-color: rgba(255, 255, 255, 0.1);
+		--dialog-background-color: rgba(255, 255, 255, 0.08);
+		--dialog-border-color: rgba(255, 255, 255, 0.15);
 	}
 
 	&.ltblue {
@@ -41,8 +41,8 @@
 		--main-text-color-dk: #dcdbdb;
 		--dialog-text-color: #fff;
 		--dialog-headline-color: #fff;
-		--dialog-background-color: rgba(255, 255, 255, 0.05);
-		--dialog-border-color: rgba(255, 255, 255, 0.1);
+		--dialog-background-color: rgba(255, 255, 255, 0.08);
+		--dialog-border-color: rgba(255, 255, 255, 0.15);
 	}
 
 	&.white {
@@ -53,8 +53,8 @@
 		--main-text-color-lt: #646464;
 		--main-text-color-dk: #8c8c8c;
 		--dialog-text-color: #000;
-		--dialog-background-color: rgba(255, 255, 255, 0.95);
-		--dialog-border-color: rgba(0, 0, 0, 0.2);
+		--dialog-background-color: rgba(255, 255, 255, 0.25);
+		--dialog-border-color: rgba(0, 0, 0, 0.1);
 		--dialog-headline-color: #000;
 	}
 
@@ -67,8 +67,8 @@
 		--main-text-color-dk: #dcdbdb;
 		--dialog-text-color: #fff;
 		--dialog-headline-color: #fff;
-		--dialog-background-color: rgba(255, 255, 255, 0.05);
-		--dialog-border-color: rgba(255, 255, 255, 0.1);
+		--dialog-background-color: rgba(255, 255, 255, 0.08);
+		--dialog-border-color: rgba(255, 255, 255, 0.15);
 	}
 
 	&.black {
@@ -80,8 +80,8 @@
 		--main-text-color-dk: #dcdbdb;
 		--dialog-text-color: #fff;
 		--dialog-headline-color: #fff;
-		--dialog-background-color: rgba(255, 255, 255, 0.05);
-		--dialog-border-color: rgba(255, 255, 255, 0.1);
+		--dialog-background-color: rgba(255, 255, 255, 0.08);
+		--dialog-border-color: rgba(255, 255, 255, 0.15);
 	}
 
 	&.ltgreen {
@@ -93,8 +93,8 @@
 		--main-text-color-dk: #c8e0c8;
 		--dialog-text-color: #fff;
 		--dialog-headline-color: #fff;
-		--dialog-background-color: rgba(255, 255, 255, 0.05);
-		--dialog-border-color: rgba(255, 255, 255, 0.1);
+		--dialog-background-color: rgba(255, 255, 255, 0.08);
+		--dialog-border-color: rgba(255, 255, 255, 0.15);
 	}
 
 	.controls {
@@ -1016,7 +1016,7 @@
 		height: 56px;
 		border-radius: 50%;
 		background: rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(10px);
+		backdrop-filter: saturate(200%) brightness(1.2) blur(40px);
 		border: 1px solid rgba(255, 255, 255, 0.2);
 		display: flex;
 		align-items: center;
@@ -1058,8 +1058,8 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background: rgba(0, 0, 0, 0.6);
-		backdrop-filter: blur(5px);
+		background: rgba(0, 0, 0, 0.3);
+		backdrop-filter: saturate(180%) brightness(1.1) blur(30px);
 		z-index: 999;
 		display: flex;
 		align-items: center;
@@ -1139,8 +1139,8 @@
 				width: 48px;
 				height: 48px;
 				border-radius: 12px;
-				background: rgba(255, 255, 255, 0.05);
-				border: 1px solid rgba(255, 255, 255, 0.1);
+				background: rgba(255, 255, 255, 0.08);
+				border: 1px solid rgba(255, 255, 255, 0.15);
 				color: var(--main-text-color);
 				cursor: pointer;
 				display: flex;
@@ -1155,7 +1155,7 @@
 				}
 
 				&:hover {
-					background: rgba(255, 255, 255, 0.1);
+					background: rgba(255, 255, 255, 0.12);
 					border-color: rgba(255, 255, 255, 0.2);
 					transform: translateY(-2px);
 
