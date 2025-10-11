@@ -93,7 +93,7 @@ export class AppService {
 			console.log(`[AppService] 语言已切换为: ${language} (来源: ${source})`);
 			
 			// 通知父窗口语言变化
-			if (this.iframeCommunication.isInIframe() && source === 'internal') {
+			if (this.iframeCommunication.isInIframe() && source !== 'external-parent') {
 				this.iframeCommunication.notifyLanguageChange(language, source);
 			}
 		}
