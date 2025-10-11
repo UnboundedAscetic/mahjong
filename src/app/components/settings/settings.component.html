@@ -5,18 +5,25 @@
 			<ul class="radio">
 				<li><input type="radio" name="lang" id="lang0" value="auto"
 									 [checked]="( app.settings.lang === 'auto' )"
-									 (change)="app.settings.lang = 'auto'; app.setLang();"
+									 (change)="changeLanguage('auto')"
 				/><label for="lang0">{{ 'LANG_AUTO' | translate }}</label></li>
 				@for (lang of languages; track lang; let i = $index) {
 					<li>
 						<input type="radio" name="lang" [id]="'lang'+(i+1)" [value]="lang.key"
 									 [checked]="( app.settings.lang === lang.key )"
-									 (change)="app.settings.lang = lang.key;app.setLang();"
+									 (change)="changeLanguage(lang.key)"
 						/><label [for]="'lang'+(i+1)">{{ lang.title }}</label></li>
 				}
 			</ul>
 		</form>
 	</div>
+	@if (isIframeMode) {
+		<div class="iframe-mode-info">
+			<small>{{ 'LANG_EXTERNAL_CONTROL_ENABLED' | translate }}</small>
+		</div>
+	}
+</div>
+<div class="settings">
 	<p>{{ 'BACKGROUND' | translate }}</p>
 	<div class="buttons">
 		<form>
@@ -32,7 +39,7 @@
 			</ul>
 		</form>
 	</div>
-	</div>
+</div>
 <div class="settings">
 	<p>{{ 'TILESET' | translate }}</p>
 	<div class="buttons">

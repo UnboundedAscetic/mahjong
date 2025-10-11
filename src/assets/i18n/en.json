@@ -40,6 +40,8 @@
 	"AUDIO_MUSIC": "Music",
 	"LANG": "Language",
 	"LANG_AUTO": "[Default]",
+	"LANG_CONTROLLED_EXTERNALLY": "Language is controlled by the parent application",
+	"LANG_EXTERNAL_CONTROL_ENABLED": "Language can be controlled both here and externally",
 	"OPEN_SETTINGS": "Click here to open the settings",
 	"OPEN_HELP": "Click here to open the help dialog",
 	"READ_MORE_WIKIPEDIA": "Read more on wikipedia",

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahjong Game Iframe Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .language-selector label {
+            font-weight: bold;
+        }
+        .language-selector select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .language-selector button {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .language-selector button:hover {
+            background: #0056b3;
+        }
+        .iframe-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .info {
+            background: #e7f3ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .info h3 {
+            margin-top: 0;
+            color: #0066cc;
+        }
+        .info code {
+            background: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .log {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .log .timestamp {
+            color: #68d391;
+        }
+        .log .message {
+            color: #90cdf4;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🀄 麻将游戏 Iframe 语言联动测试</h1>
+        <p>测试外部语言选择器与游戏内部语言的同步功能</p>
+    </div>
+
+    <div class="controls">
+        <h3>🌍 外部语言控制</h3>
+        <div class="language-selector">
+            <label for="externalLang">选择语言：</label>
+            <select id="externalLang">
+                <option value="en">English</option>
+                <option value="zh" selected>中文</option>
+                <option value="de">Deutsch</option>
+                <option value="nl">Nederlands</option>
+                <option value="pt">Português</option>
+                <option value="ru">русский</option>
+                <option value="es">Español</option>
+                <option value="eu">Euskara</option>
+                <option value="jp">日本語</option>
+                <option value="fr">Français</option>
+            </select>
+            <button onclick="changeLanguage()">切换语言</button>
+            <button onclick="requestLanguage()">请求当前语言</button>
+        </div>
+    </div>
+
+    <div class="iframe-container">
+        <h3>🎮 麻将游戏</h3>
+        <iframe id="gameFrame" src="http://localhost:4200/" title="Mahjong Game"></iframe>
+    </div>
+
+    <div class="info">
+        <h3>📋 测试说明</h3>
+        <ul>
+            <li><strong>语言切换测试：</strong>使用上方下拉框选择不同语言，点击"切换语言"按钮</li>
+            <li><strong>消息协议：</strong>使用 <code>postMessage</code> API 进行跨域通信</li>
+            <li><strong>消息类型：</code>
+                <ul>
+                    <li><code>MAHJONG_LANGUAGE_CHANGE</code> - 语言切换通知</li>
+                    <li><code>MAHJONG_LANGUAGE_REQUEST</code> - 请求当前语言</li>
+                </ul>
+            </li>
+            <li><strong>支持的语言：</strong>en, zh, de, nl, pt, ru, es, eu, jp, fr</li>
+        </ul>
+    </div>
+
+    <div class="log" id="messageLog">
+        <div class="timestamp">[系统]</div> 
+        <div class="message">iframe 语言联动测试已启动，等待消息...</div>
+    </div>
+
+    <script>
+        let gameFrame;
+        let messageLog;
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            gameFrame = document.getElementById('gameFrame');
+            messageLog = document.getElementById('messageLog');
+            
+            // 监听来自iframe的消息
+            window.addEventListener('message', function(event) {
+                handleMessage(event);
+            });
+
+            addLog('系统', 'iframe 加载完成，消息监听器已启动');
+        });
+
+        // 处理来自iframe的消息
+        function handleMessage(event) {
+            const message = event.data;
+            
+            if (message && typeof message === 'object' && message.type) {
+                switch (message.type) {
+                    case 'MAHJONG_LANGUAGE_CHANGE':
+                        handleLanguageChange(message);
+                        break;
+                    case 'MAHJONG_LANGUAGE_REQUEST':
+                        handleLanguageRequest(message);
+                        break;
+                    default:
+                        addLog('未知消息', JSON.stringify(message));
+                }
+            }
+        }
+
+        // 处理语言变化通知
+        function handleLanguageChange(message) {
+            const { language, source } = message.payload;
+            addLog('语言变化通知', `语言: ${language}, 来源: ${source}`);
+            
+            // 更新外部选择器
+            const externalLang = document.getElementById('externalLang');
+            if (externalLang.value !== language) {
+                externalLang.value = language;
+                addLog('外部选择器', '已同步到游戏语言');
+            }
+        }
+
+        // 处理语言请求
+        function handleLanguageRequest(message) {
+            addLog('语言请求', '游戏请求当前语言设置');
+            
+            // 发送当前语言到游戏
+            const currentLang = document.getElementById('externalLang').value;
+            sendLanguageChange(currentLang, 'external-parent-response');
+        }
+
+        // 切换语言
+        function changeLanguage() {
+            const selectedLang = document.getElementById('externalLang').value;
+            sendLanguageChange(selectedLang, 'external-parent');
+        }
+
+        // 发送语言变化消息
+        function sendLanguageChange(language, source) {
+            const message = {
+                type: 'MAHJONG_LANGUAGE_CHANGE',
+                payload: {
+                    language: language,
+                    source: source
+                }
+            };
+
+            gameFrame.contentWindow.postMessage(message, '*');
+            addLog('发送消息', `语言切换到: ${language} (来源: ${source})`);
+        }
+
+        // 请求当前语言
+        function requestLanguage() {
+            const message = {
+                type: 'MAHJONG_LANGUAGE_REQUEST',
+                payload: {
+                    source: 'external-parent'
+                }
+            };
+
+            gameFrame.contentWindow.postMessage(message, '*');
+            addLog('发送请求', '请求游戏的当前语言设置');
+        }
+
+        // 添加日志
+        function addLog(type, message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `
+                <span class="timestamp">[${timestamp}]</span> 
+                <span class="message">${type}: ${message}</span>
+            `;
+            
+            messageLog.appendChild(logEntry);
+            messageLog.scrollTop = messageLog.scrollHeight;
+
+            // 限制日志条目数量
+            const entries = messageLog.children;
+            if (entries.length > 50) {
+                messageLog.removeChild(entries[0]);
+            }
+        }
+
+        // iframe 加载完成后的初始化
+        document.getElementById('gameFrame').onload = function() {
+            setTimeout(function() {
+                addLog('系统', 'iframe 完全加载，可以开始测试');
+                // 自动发送一次初始语言
+                requestLanguage();
+            }, 2000);
+        };
+    </script>
+</body>
+</html>

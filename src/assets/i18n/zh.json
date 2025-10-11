@@ -40,6 +40,8 @@
 	"AUDIO_MUSIC": "音乐",
 	"LANG": "语言",
 	"LANG_AUTO": "[默认]",
+	"LANG_CONTROLLED_EXTERNALLY": "语言由父应用控制",
+	"LANG_EXTERNAL_CONTROL_ENABLED": "语言可在此处或外部控制",
 	"OPEN_SETTINGS": "点击这里打开设置",
 	"OPEN_HELP": "点击这里打开帮助对话框",
 	"READ_MORE_WIKIPEDIA": "在维基百科上阅读更多",

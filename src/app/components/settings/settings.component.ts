@@ -26,6 +26,11 @@ export class SettingsComponent {
 	private readonly layoutService = inject(LayoutService);
 	private readonly translate = inject(TranslateService);
 
+	// iframe模式检测
+	get isIframeMode(): boolean {
+		return this.app.isInIframe();
+	}
+
 	updateKyodaiUrl(event: Event): void {
 		this.app.settings.kyodaiUrl = (event.target as HTMLInputElement).value;
 		this.app.settings.save();
@@ -66,5 +71,23 @@ export class SettingsComponent {
 				console.error(error);
 			});
 		}
+	}
+
+	/**
+	 * 获取当前语言标题
+	 */
+	getCurrentLanguageTitle(): string {
+		const currentLang = this.app.settings.lang;
+		if (currentLang === 'auto') {
+			return this.translate.instant('LANG_AUTO');
+		}
+		return LANGUAGES[currentLang]?.title || currentLang;
+	}
+
+	/**
+	 * 改变语言（支持双向控制）
+	 */
+	changeLanguage(language: string): void {
+		this.app.changeLanguage(language, 'settings');
 	}
 }
