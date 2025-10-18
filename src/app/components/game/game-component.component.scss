@@ -256,17 +256,17 @@
 		}
 
 		@include mixins.respond-to(small-down) {
-			padding: 0 6px;
+			padding: 0 4px;
 
 			.floating-dock-container {
 				bottom: 15px;
-				left: 15px;
+				left: 10px;
 			}
 
 			.floating-dock {
-				gap: 6px;
-				padding: 10px 12px;
-				border-radius: 20px;
+				gap: 4px;
+				padding: 8px 10px;
+				border-radius: 16px;
 
 				.dock-button {
 					width: 42px;
@@ -328,9 +328,9 @@
 				}
 			}
 
+			// 隐藏左下角dock，启用悬浮球模式
 			.floating-dock-container {
-				bottom: 12px;
-				left: 12px;
+				display: none; // 隐藏完整的dock
 			}
 
 			.floating-dock {
@@ -416,6 +416,11 @@
 
 				.menu-button {
 					display: block;
+					// 去掉圆圈效果，改为圆角矩形
+					border-radius: 4px !important;
+					// 确保不是圆形背景
+					background: transparent !important;
+					border: 1px solid rgba(255, 255, 255, 0.2) !important;
 				}
 
 				.menu {
@@ -466,6 +471,7 @@
 		}
 	}
 
+	
 	.controls-bottom {
 		// 隐藏原有的底部控制栏，因为现在使用浮动菜单
 		display: none;
@@ -664,6 +670,18 @@
 		flex-direction: row;
 		flex: 1;
 		overflow: hidden;
+		
+		// 竖屏模式下优化牌堆显示
+		@include mixins.respond-to(small-down) {
+			.board-svg {
+				width: 120%; // 增加宽度以减少左右间隙
+				height: 100%;
+				position: relative;
+				transform-origin: center center; // 设置中心点为缩放中心
+				transform: translateX(-12%) scale(1.1); // 向左偏移12%并放大1.1倍，确保居中
+				user-select: none;
+			}
+		}
 	}
 
 	// 右下角统计信息容器
@@ -773,7 +791,7 @@
 	@include mixins.respond-to(small-down) {
 		.floating-stats-container {
 			bottom: 15px;
-			right: 15px;
+			right: 10px;
 		}
 
 		.floating-stats {
@@ -1010,7 +1028,7 @@
 	// 悬浮球样式
 	.floating-ball {
 		position: fixed;
-		bottom: 20px;
+		bottom: 100px;
 		left: 20px;
 		width: 56px;
 		height: 56px;
