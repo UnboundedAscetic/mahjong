@@ -665,25 +665,7 @@
 
 	// 移除原有的悬停效果，改为基于鼠标距离的动态效果
 
-	.board {
-		display: flex;
-		flex-direction: row;
-		flex: 1;
-		overflow: hidden;
-		
-		// 竖屏模式下优化牌堆显示
-		@include mixins.respond-to(small-down) {
-			.board-svg {
-				width: 120%; // 增加宽度以减少左右间隙
-				height: 100%;
-				position: relative;
-				transform-origin: center center; // 设置中心点为缩放中心
-				transform: translateX(-12%) scale(1.1); // 向左偏移12%并放大1.1倍，确保居中
-				user-select: none;
-			}
-		}
-
-	// 右下角统计信息容器
+	// 右下角统计信息容器 - 移出.board嵌套以匹配HTML结构
 	.floating-stats-container {
 		position: fixed;
 		bottom: 20px;
@@ -785,6 +767,24 @@
 			transform: translateX(-50%) translateY(-12px);
 		}
 	}
+
+	.board {
+		display: flex;
+		flex-direction: row;
+		flex: 1;
+		overflow: hidden;
+		
+		// 竖屏模式下优化牌堆显示
+		@include mixins.respond-to(small-down) {
+			.board-svg {
+				width: 120%; // 增加宽度以减少左右间隙
+				height: 100%;
+				position: relative;
+				transform-origin: center center; // 设置中心点为缩放中心
+				transform: translateX(-12%) scale(1.1); // 向左偏移12%并放大1.1倍，确保居中
+				user-select: none;
+			}
+		}
 
 	// 响应式设计适配
 	@include mixins.respond-to(small-down) {
@@ -1007,166 +1007,30 @@
 @include mixins.respond-to-ultra-low-height() {
 	// 超低高度横屏：≤480px（覆盖iPhone 17 Pro Max及类似设备）
 	
-	// 调整浮动菜单位置
+	// 只调整位置，保持原有样式
 	.floating-dock-container {
 		bottom: 12px;
 		left: 8px;
 	}
 	
-	.floating-dock {
-		gap: 6px;
-		padding: 8px 12px;
-		border-radius: 18px;
-	}
-	
-	.dock-button {
-		width: 40px;
-		height: 40px;
-		border-radius: 14px;
-		
-		i {
-			font-size: 18px;
-		}
-	}
-	
-	.dock-separator {
-		height: 28px;
-		margin: 0 3px;
-	}
-	
-	// 调整统计信息位置
 	.floating-stats-container {
 		bottom: 12px;
 		right: 8px;
-	}
-	
-	.floating-stats {
-		gap: 12px;
-		padding: 8px 12px;
-		border-radius: 18px;
-	}
-	
-	.stat-item {
-		gap: 6px;
-		padding: 6px 10px;
-		border-radius: 10px;
-		
-		i {
-			font-size: 14px;
-		}
-		
-		.stat-label {
-			font-size: 12px;
-		}
-	}
-	
-	// 调整悬浮球位置
-	.floating-ball {
-		bottom: 80px;
-		left: 8px;
-		width: 48px;
-		height: 48px;
-		
-		i {
-			font-size: 20px;
-		}
-	}
-	
-	// 调整牌面布局，为底部菜单留出空间
-	.board {
-		.board-svg {
-			height: calc(100% - 100px);
-			margin-top: 10px;
-			
-			@media (orientation: landscape) {
-				width: 100%;
-				height: calc(100% - 100px);
-				transform: scale(0.9) translateY(-8px);
-			}
-		}
 	}
 }
 
 @include mixins.respond-to-extreme-low-height() {
 	// 极端低高度横屏：≤420px（比iPhone 17 Pro Max稍小的设备）
 	
-	// 更激进的菜单位置调整
+	// 更激进的位置调整，保持原有样式
 	.floating-dock-container {
 		bottom: 6px;
 		left: 4px;
 	}
 	
-	.floating-dock {
-		gap: 4px;
-		padding: 6px 10px;
-		border-radius: 16px;
-	}
-	
-	.dock-button {
-		width: 36px;
-		height: 36px;
-		border-radius: 12px;
-		
-		i {
-			font-size: 16px;
-		}
-	}
-	
-	.dock-separator {
-		height: 24px;
-		margin: 0 2px;
-	}
-	
-	// 更激进的统计信息调整
 	.floating-stats-container {
 		bottom: 6px;
 		right: 4px;
-	}
-	
-	.floating-stats {
-		gap: 8px;
-		padding: 6px 10px;
-		border-radius: 16px;
-	}
-	
-	.stat-item {
-		gap: 4px;
-		padding: 4px 8px;
-		border-radius: 9px;
-		
-		i {
-			font-size: 12px;
-		}
-		
-		.stat-label {
-			font-size: 11px;
-		}
-	}
-	
-	// 更激进的悬浮球调整
-	.floating-ball {
-		bottom: 60px;
-		left: 4px;
-		width: 44px;
-		height: 44px;
-		
-		i {
-			font-size: 18px;
-		}
-	}
-	
-	// 更激进的牌面调整
-	.board {
-		.board-svg {
-			height: calc(100% - 80px);
-			margin-top: 5px;
-			
-			@media (orientation: landscape) {
-				width: 100%;
-				height: calc(100% - 80px);
-				transform: scale(0.8) translateY(-10px);
-			}
-		}
 	}
 }
 
