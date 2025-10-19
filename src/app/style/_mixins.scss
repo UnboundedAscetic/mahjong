@@ -12,6 +12,20 @@
 	}
 }
 
+// 新增：超低高度横屏检测（专门解决重叠问题）
+@mixin respond-to-ultra-low-height() {
+	@media only screen and (max-height: 320px) and (orientation: landscape) {
+		@content;
+	}
+}
+
+// 新增：极端低高度横屏检测
+@mixin respond-to-extreme-low-height() {
+	@media only screen and (max-height: 280px) and (orientation: landscape) {
+		@content;
+	}
+}
+
 @mixin respond-to-height($media) {
 	@if $media == pico-down {
 		@media only screen and (max-height: variables.$bp-pico) {
