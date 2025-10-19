@@ -12,16 +12,16 @@
 	}
 }
 
-// 新增：超低高度横屏检测（专门解决重叠问题）
+// 新增：超低高度横屏检测（基于iPhone 17 Pro Max 440px + 40px缓冲）
 @mixin respond-to-ultra-low-height() {
-	@media only screen and (max-height: 320px) and (orientation: landscape) {
+	@media only screen and (max-height: 480px) and (orientation: landscape) {
 		@content;
 	}
 }
 
-// 新增：极端低高度横屏检测
+// 新增：极端低高度横屏检测（基于iPhone 17 Pro Max 440px - 20px缓冲）
 @mixin respond-to-extreme-low-height() {
-	@media only screen and (max-height: 280px) and (orientation: landscape) {
+	@media only screen and (max-height: 420px) and (orientation: landscape) {
 		@content;
 	}
 }

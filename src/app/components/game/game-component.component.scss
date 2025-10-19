@@ -486,18 +486,6 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
-
-		// 超低高度横屏：调整位置避免与牌面重叠
-		@include mixins.respond-to-ultra-low-height() {
-			bottom: 8px;
-			left: 8px;
-		}
-
-		// 极端低高度横屏：进一步调整位置
-		@include mixins.respond-to-extreme-low-height() {
-			bottom: 4px;
-			left: 4px;
-		}
 	}
 
 	.floating-dock {
@@ -518,20 +506,6 @@
 			transform: scale(1.02);
 			background: transparent;
 			box-shadow: none;
-		}
-
-		// 超低高度横屏：缩小尺寸和间距
-		@include mixins.respond-to-ultra-low-height() {
-			gap: 6px;
-			padding: 8px 12px;
-			border-radius: 18px;
-		}
-
-		// 极端低高度横屏：进一步缩小
-		@include mixins.respond-to-extreme-low-height() {
-			gap: 4px;
-			padding: 6px 10px;
-			border-radius: 16px;
 		}
 	}
 
@@ -591,28 +565,6 @@
 
 			&:hover {
 				background: rgba(255, 255, 255, 0.04);
-			}
-		}
-
-		// 超低高度横屏：缩小按钮尺寸
-		@include mixins.respond-to-ultra-low-height() {
-			width: 40px;
-			height: 40px;
-			border-radius: 14px;
-
-			i {
-				font-size: 18px;
-			}
-		}
-
-		// 极端低高度横屏：进一步缩小按钮
-		@include mixins.respond-to-extreme-low-height() {
-			width: 36px;
-			height: 36px;
-			border-radius: 12px;
-
-			i {
-				font-size: 16px;
 			}
 		}
 	}
@@ -677,18 +629,6 @@
 			transparent
 		);
 		margin: 0 4px;
-
-		// 超低高度横屏：缩小分隔线高度
-		@include mixins.respond-to-ultra-low-height() {
-			height: 28px;
-			margin: 0 3px;
-		}
-
-		// 极端低高度横屏：进一步缩小
-		@include mixins.respond-to-extreme-low-height() {
-			height: 24px;
-			margin: 0 2px;
-		}
 	}
 
 	// 工具提示样式 - 纯文字版本
@@ -743,37 +683,6 @@
 			}
 		}
 
-		// 超低高度横屏：确保牌面不与底部菜单重叠
-		@include mixins.respond-to-ultra-low-height() {
-			.board-svg {
-				height: calc(100% - 80px); // 为底部菜单留出空间
-				margin-top: 10px;
-				transform-origin: center center;
-				
-				// 在横屏时调整缩放和位置
-				@media (orientation: landscape) {
-					width: 100%;
-					height: calc(100% - 80px);
-					transform: scale(0.85) translateY(-5px); // 稍微缩小并上移
-				}
-			}
-		}
-
-		// 极端低高度横屏：更加激进地调整牌面位置
-		@include mixins.respond-to-extreme-low-height() {
-			.board-svg {
-				height: calc(100% - 70px); // 为底部菜单留出更多空间
-				margin-top: 5px;
-				
-				@media (orientation: landscape) {
-					width: 100%;
-					height: calc(100% - 70px);
-					transform: scale(0.75) translateY(-8px); // 进一步缩小并上移
-				}
-			}
-		}
-	}
-
 	// 右下角统计信息容器
 	.floating-stats-container {
 		position: fixed;
@@ -783,18 +692,6 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-
-		// 超低高度横屏：调整位置避免与牌面重叠
-		@include mixins.respond-to-ultra-low-height() {
-			bottom: 8px;
-			right: 8px;
-		}
-
-		// 极端低高度横屏：进一步调整位置
-		@include mixins.respond-to-extreme-low-height() {
-			bottom: 4px;
-			right: 4px;
-		}
 	}
 
 	.floating-stats {
@@ -814,20 +711,6 @@
 			transform: scale(1.02);
 			background: transparent;
 			box-shadow: none;
-		}
-
-		// 超低高度横屏：缩小尺寸和间距
-		@include mixins.respond-to-ultra-low-height() {
-			gap: 12px;
-			padding: 8px 12px;
-			border-radius: 18px;
-		}
-
-		// 极端低高度横屏：进一步缩小
-		@include mixins.respond-to-extreme-low-height() {
-			gap: 8px;
-			padding: 6px 10px;
-			border-radius: 16px;
 		}
 	}
 
@@ -868,36 +751,6 @@
 
 			i {
 				opacity: 0.9;
-			}
-		}
-
-		// 超低高度横屏：缩小统计项目尺寸
-		@include mixins.respond-to-ultra-low-height() {
-			gap: 6px;
-			padding: 6px 10px;
-			border-radius: 10px;
-
-			i {
-				font-size: 14px;
-			}
-
-			.stat-label {
-				font-size: 12px;
-			}
-		}
-
-		// 极端低高度横屏：进一步缩小
-		@include mixins.respond-to-extreme-low-height() {
-			gap: 4px;
-			padding: 4px 8px;
-			border-radius: 9px;
-
-			i {
-				font-size: 12px;
-			}
-
-			.stat-label {
-				font-size: 11px;
 			}
 		}
 	}
@@ -1150,6 +1003,173 @@
 		}
 }
 
+// 新增：基于iPhone 17 Pro Max的横屏优化（解决底部菜单重叠问题）
+@include mixins.respond-to-ultra-low-height() {
+	// 超低高度横屏：≤480px（覆盖iPhone 17 Pro Max及类似设备）
+	
+	// 调整浮动菜单位置
+	.floating-dock-container {
+		bottom: 12px;
+		left: 8px;
+	}
+	
+	.floating-dock {
+		gap: 6px;
+		padding: 8px 12px;
+		border-radius: 18px;
+	}
+	
+	.dock-button {
+		width: 40px;
+		height: 40px;
+		border-radius: 14px;
+		
+		i {
+			font-size: 18px;
+		}
+	}
+	
+	.dock-separator {
+		height: 28px;
+		margin: 0 3px;
+	}
+	
+	// 调整统计信息位置
+	.floating-stats-container {
+		bottom: 12px;
+		right: 8px;
+	}
+	
+	.floating-stats {
+		gap: 12px;
+		padding: 8px 12px;
+		border-radius: 18px;
+	}
+	
+	.stat-item {
+		gap: 6px;
+		padding: 6px 10px;
+		border-radius: 10px;
+		
+		i {
+			font-size: 14px;
+		}
+		
+		.stat-label {
+			font-size: 12px;
+		}
+	}
+	
+	// 调整悬浮球位置
+	.floating-ball {
+		bottom: 80px;
+		left: 8px;
+		width: 48px;
+		height: 48px;
+		
+		i {
+			font-size: 20px;
+		}
+	}
+	
+	// 调整牌面布局，为底部菜单留出空间
+	.board {
+		.board-svg {
+			height: calc(100% - 100px);
+			margin-top: 10px;
+			
+			@media (orientation: landscape) {
+				width: 100%;
+				height: calc(100% - 100px);
+				transform: scale(0.9) translateY(-8px);
+			}
+		}
+	}
+}
+
+@include mixins.respond-to-extreme-low-height() {
+	// 极端低高度横屏：≤420px（比iPhone 17 Pro Max稍小的设备）
+	
+	// 更激进的菜单位置调整
+	.floating-dock-container {
+		bottom: 6px;
+		left: 4px;
+	}
+	
+	.floating-dock {
+		gap: 4px;
+		padding: 6px 10px;
+		border-radius: 16px;
+	}
+	
+	.dock-button {
+		width: 36px;
+		height: 36px;
+		border-radius: 12px;
+		
+		i {
+			font-size: 16px;
+		}
+	}
+	
+	.dock-separator {
+		height: 24px;
+		margin: 0 2px;
+	}
+	
+	// 更激进的统计信息调整
+	.floating-stats-container {
+		bottom: 6px;
+		right: 4px;
+	}
+	
+	.floating-stats {
+		gap: 8px;
+		padding: 6px 10px;
+		border-radius: 16px;
+	}
+	
+	.stat-item {
+		gap: 4px;
+		padding: 4px 8px;
+		border-radius: 9px;
+		
+		i {
+			font-size: 12px;
+		}
+		
+		.stat-label {
+			font-size: 11px;
+		}
+	}
+	
+	// 更激进的悬浮球调整
+	.floating-ball {
+		bottom: 60px;
+		left: 4px;
+		width: 44px;
+		height: 44px;
+		
+		i {
+			font-size: 18px;
+		}
+	}
+	
+	// 更激进的牌面调整
+	.board {
+		.board-svg {
+			height: calc(100% - 80px);
+			margin-top: 5px;
+			
+			@media (orientation: landscape) {
+				width: 100%;
+				height: calc(100% - 80px);
+				transform: scale(0.8) translateY(-10px);
+			}
+		}
+	}
+}
+
 // 响应式菜单：大屏幕显示分离式菜单，小屏幕显示悬浮球+浮动菜单
 .large-screen-menu {
 	// 默认显示（大屏幕）
@@ -1211,30 +1231,6 @@
 
 			i {
 				transform: rotate(45deg);
-			}
-		}
-
-		// 超低高度横屏：调整悬浮球位置
-		@include mixins.respond-to-ultra-low-height() {
-			bottom: 70px;
-			left: 8px;
-			width: 48px;
-			height: 48px;
-
-			i {
-				font-size: 20px;
-			}
-		}
-
-		// 极端低高度横屏：进一步调整
-		@include mixins.respond-to-extreme-low-height() {
-			bottom: 50px;
-			left: 4px;
-			width: 44px;
-			height: 44px;
-
-			i {
-				font-size: 18px;
 			}
 		}
 	}
@@ -1376,4 +1372,5 @@
 			}
 		}
 	}
+}
 }
