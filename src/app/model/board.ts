@@ -21,6 +21,9 @@ export class Board {
 	hints: Hints = { groups: [], current: undefined };
 	selected?: Stone = undefined;
 	undo: Array<Place> = [];
+	movesCount: number = 0;
+	hintsUsed: number = 0;
+	undoUsed: number = 0;
 
 	clearSelection(): void {
 		if (this.selected) {
@@ -75,6 +78,7 @@ export class Board {
 		for (const stone of current.stones) {
 			stone.hinted = true;
 		}
+		this.hintsUsed++; // Count each hint usage
 	}
 
 	reset(): void {
@@ -84,6 +88,10 @@ export class Board {
 		this.count = 0;
 		this.stones = [];
 		this.undo = [];
+		// Reset statistics
+		this.movesCount = 0;
+		this.hintsUsed = 0;
+		this.undoUsed = 0;
 	}
 
 	canRemove(stone: Stone): boolean {
@@ -150,6 +158,7 @@ export class Board {
 			}
 		}
 		this.update();
+		this.undoUsed++; // Count each undo operation
 	}
 
 	shuffle() {
@@ -216,6 +225,7 @@ export class Board {
 		this.clearHints();
 		sel.picked = true;
 		stone.picked = true;
+		this.movesCount++; // Count each successful pair match as one move
 		this.update();
 	}
 

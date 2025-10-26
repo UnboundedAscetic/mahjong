@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievement Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+        .success {
+            border-left-color: #28a745;
+            background-color: #d4edda;
+        }
+        .warning {
+            border-left-color: #ffc107;
+            background-color: #fff3cd;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mahjong Achievement System Test</h1>
+        <p>This page tests the achievement message communication between the game and parent website.</p>
+        
+        <div id="messageLog">
+            <h3>Received Messages:</h3>
+            <div id="messages"></div>
+        </div>
+        
+        <h3>Game iframe:</h3>
+        <iframe src="http://localhost:4200" id="gameFrame"></iframe>
+    </div>
+
+    <script>
+        let messageCount = 0;
+        const messagesContainer = document.getElementById('messages');
+        
+        function logMessage(type, message, isImportant = false) {
+            messageCount++;
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isImportant ? 'success' : ''}`;
+            messageDiv.innerHTML = `
+                <strong>${messageCount}. [${new Date().toLocaleTimeString()}] ${type}:</strong><br>
+                <pre>${JSON.stringify(message, null, 2)}</pre>
+            `;
+            messagesContainer.appendChild(messageDiv);
+            
+            // Auto scroll to latest message
+            messageDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Listen for messages from the game iframe
+        window.addEventListener('message', function(event) {
+            // Basic security check - you might want to make this more strict
+            if (event.origin !== window.location.origin && !event.origin.includes('localhost')) {
+                console.warn('Received message from unexpected origin:', event.origin);
+                return;
+            }
+            
+            const message = event.data;
+            if (!message || typeof message !== 'object' || !message.type) {
+                return;
+            }
+            
+            switch (message.type) {
+                case 'MAHJONG_GAME_COMPLETED':
+                    logMessage('Game Completed', message, true);
+                    break;
+                    
+                case 'MAHJONG_ACHIEVEMENT_UNLOCKED':
+                    logMessage('Achievement Unlocked', message, true);
+                    break;
+                    
+                case 'MAHJONG_HIGH_SCORE':
+                    logMessage('High Score', message, true);
+                    break;
+                    
+                case 'MAHJONG_LANGUAGE_CHANGE':
+                    logMessage('Language Change', message);
+                    break;
+                    
+                case 'MAHJONG_LANGUAGE_REQUEST':
+                    logMessage('Language Request', message);
+                    break;
+                    
+                default:
+                    logMessage('Unknown Message', message);
+            }
+        });
+        
+        // Send test language change to game
+        function sendLanguageChange(language) {
+            const iframe = document.getElementById('gameFrame');
+            iframe.contentWindow.postMessage({
+                type: 'MAHJONG_LANGUAGE_CHANGE',
+                payload: {
+                    language: language,
+                    source: 'test-parent'
+                }
+            }, '*');
+        }
+        
+        // Add some test buttons
+        const container = document.querySelector('.container');
+        const testDiv = document.createElement('div');
+        testDiv.innerHTML = `
+            <h3>Test Controls:</h3>
+            <button onclick="sendLanguageChange('en')">Set Language: English</button>
+            <button onclick="sendLanguageChange('zh')">Set Language: 中文</button>
+            <button onclick="sendLanguageChange('fr')">Set Language: Français</button>
+            <button onclick="clearMessages()">Clear Messages</button>
+        `;
+        container.insertBefore(testDiv, document.getElementById('messageLog'));
+        
+        function clearMessages() {
+            messagesContainer.innerHTML = '';
+            messageCount = 0;
+        }
+        
+        console.log('Achievement test page loaded. Listening for game messages...');
+    </script>
+</body>
+</html>

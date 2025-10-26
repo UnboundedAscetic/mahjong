@@ -1,3 +1,5 @@
+@use "../../style/mixins";
+
 :host {
 	width: 100%;
 	height: 100%;
@@ -12,6 +14,20 @@
 		transform-origin: 0 0 0;
 		transform: translate(0, 0) scale(1);
 		user-select: none;
+	}
+	
+	// 超低高度横屏模式：为牌面底部添加安全区域
+	@include mixins.respond-to-ultra-low-height() {
+		.board-svg {
+			padding-bottom: 50px;
+		}
+	}
+	
+	// 极端低高度横屏模式：更大的安全区域
+	@include mixins.respond-to-extreme-low-height() {
+		.board-svg {
+			padding-bottom: 60px;
+		}
 	}
 
 	// 为旋转的stage设置旋转中心

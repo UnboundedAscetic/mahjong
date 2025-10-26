@@ -15,7 +15,69 @@ export interface LanguageRequestMessage {
   };
 }
 
-export type MahjongMessage = LanguageMessage | LanguageRequestMessage;
+// Game completion message
+export interface GameCompletedMessage {
+  type: 'MAHJONG_GAME_COMPLETED';
+  payload: {
+    layoutName: string;
+    layoutId: string;
+    timeElapsed: number;
+    movesCount: number;
+    hintsUsed: number;
+    undoCount: number;
+    difficulty?: 'beginner' | 'intermediate' | 'expert';
+    score?: number;
+    comboMax?: number;
+    perfectGame: boolean;
+    timestamp: number;
+  };
+}
+
+// Achievement unlocked message
+export interface AchievementUnlockedMessage {
+  type: 'MAHJONG_ACHIEVEMENT_UNLOCKED';
+  payload: {
+    achievementId: string;
+    achievementName: string;
+    achievementType: 'first_win' | 'speed_demon' | 'perfectionist' | 'marathon' | 'combo_master' | 'explorer';
+    description: string;
+    context: {
+      layoutName?: string;
+      timeElapsed?: number;
+      movesCount?: number;
+      value?: number;
+      threshold?: number;
+    };
+    isNewAchievement: boolean;
+    progress?: number;
+    totalRequired?: number;
+    timestamp: number;
+  };
+}
+
+// High score message
+export interface HighScoreMessage {
+  type: 'MAHJONG_HIGH_SCORE';
+  payload: {
+    layoutName: string;
+    layoutId: string;
+    scoreType: 'time' | 'moves' | 'score';
+    newValue: number;
+    previousValue: number;
+    improvement: number;
+    context: {
+      movesCount: number;
+      hintsUsed: number;
+      undoCount: number;
+      perfectGame: boolean;
+    };
+    rank?: number;
+    percentile?: number;
+    timestamp: number;
+  };
+}
+
+export type MahjongMessage = LanguageMessage | LanguageRequestMessage | GameCompletedMessage | AchievementUnlockedMessage | HighScoreMessage;
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +86,9 @@ export class IframeCommunicationService {
   private readonly MESSAGE_TYPE = 'MAHJONG';
   private readonly LANGUAGE_CHANGE_TYPE = 'MAHJONG_LANGUAGE_CHANGE';
   private readonly LANGUAGE_REQUEST_TYPE = 'MAHJONG_LANGUAGE_REQUEST';
+  private readonly GAME_COMPLETED_TYPE = 'MAHJONG_GAME_COMPLETED';
+  private readonly ACHIEVEMENT_UNLOCKED_TYPE = 'MAHJONG_ACHIEVEMENT_UNLOCKED';
+  private readonly HIGH_SCORE_TYPE = 'MAHJONG_HIGH_SCORE';
   
   private isIframe = false;
   private parentOrigin: string | null = null;
@@ -93,6 +158,12 @@ export class IframeCommunicationService {
       case this.LANGUAGE_REQUEST_TYPE:
         this.handleLanguageRequest(message as LanguageRequestMessage);
         break;
+      case this.GAME_COMPLETED_TYPE:
+      case this.ACHIEVEMENT_UNLOCKED_TYPE:
+      case this.HIGH_SCORE_TYPE:
+        // These are outgoing messages only - no handling needed for incoming
+        this.log('Received outgoing message type (should not happen):', message.type);
+        break;
     }
   }
 
@@ -103,7 +174,11 @@ export class IframeCommunicationService {
     return message && 
            typeof message === 'object' && 
            typeof message.type === 'string' &&
-           (message.type === this.LANGUAGE_CHANGE_TYPE || message.type === this.LANGUAGE_REQUEST_TYPE);
+           (message.type === this.LANGUAGE_CHANGE_TYPE || 
+            message.type === this.LANGUAGE_REQUEST_TYPE ||
+            message.type === this.GAME_COMPLETED_TYPE ||
+            message.type === this.ACHIEVEMENT_UNLOCKED_TYPE ||
+            message.type === this.HIGH_SCORE_TYPE);
   }
 
   /**
@@ -167,6 +242,54 @@ export class IframeCommunicationService {
       payload: {
         source: 'mahjong-game'
       }
+    };
+
+    this.sendMessage(message);
+  }
+
+  /**
+   * 发送游戏完成消息
+   */
+  sendGameCompleted(payload: GameCompletedMessage['payload']): void {
+    if (!this.isIframe) {
+      return;
+    }
+
+    const message: GameCompletedMessage = {
+      type: this.GAME_COMPLETED_TYPE,
+      payload
+    };
+
+    this.sendMessage(message);
+  }
+
+  /**
+   * 发送成就解锁消息
+   */
+  sendAchievementUnlocked(payload: AchievementUnlockedMessage['payload']): void {
+    if (!this.isIframe) {
+      return;
+    }
+
+    const message: AchievementUnlockedMessage = {
+      type: this.ACHIEVEMENT_UNLOCKED_TYPE,
+      payload
+    };
+
+    this.sendMessage(message);
+  }
+
+  /**
+   * 发送高分记录消息
+   */
+  sendHighScore(payload: HighScoreMessage['payload']): void {
+    if (!this.isIframe) {
+      return;
+    }
+
+    const message: HighScoreMessage = {
+      type: this.HIGH_SCORE_TYPE,
+      payload
     };
 
     this.sendMessage(message);

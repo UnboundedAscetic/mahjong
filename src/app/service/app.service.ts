@@ -27,6 +27,9 @@ export class AppService {
 		// 初始化iframe通信
 		this.initializeIframeCommunication();
 		
+		// 初始化成就系统
+		this.initializeAchievementSystem();
+		
 		// 优化iframe加载性能
 		this.iframePerformance.optimizeIframeLoading();
 		
@@ -78,6 +81,54 @@ export class AppService {
 		// 通知父窗口语言已变化
 		if (this.iframeCommunication.isInIframe()) {
 			this.iframeCommunication.notifyLanguageChange(language, 'mahjong-game');
+		}
+	}
+
+	/**
+	 * 初始化成就系统
+	 */
+	private initializeAchievementSystem(): void {
+		// 设置成就回调
+		this.game.setAchievementCallbacks({
+			onGameCompleted: (payload) => this.onGameCompleted(payload),
+			onAchievementUnlocked: (payload) => this.onAchievementUnlocked(payload),
+			onHighScore: (payload) => this.onHighScore(payload)
+		});
+	}
+
+	/**
+	 * 游戏完成处理
+	 */
+	private onGameCompleted(payload: any): void {
+		console.log('[AppService] 游戏完成:', payload);
+		
+		// 发送游戏完成消息到父窗口
+		if (this.iframeCommunication.isInIframe()) {
+			this.iframeCommunication.sendGameCompleted(payload);
+		}
+	}
+
+	/**
+	 * 成就解锁处理
+	 */
+	private onAchievementUnlocked(payload: any): void {
+		console.log('[AppService] 成就解锁:', payload);
+		
+		// 发送成就消息到父窗口
+		if (this.iframeCommunication.isInIframe()) {
+			this.iframeCommunication.sendAchievementUnlocked(payload);
+		}
+	}
+
+	/**
+	 * 高分记录处理
+	 */
+	private onHighScore(payload: any): void {
+		console.log('[AppService] 新高分记录:', payload);
+		
+		// 发送高分消息到父窗口
+		if (this.iframeCommunication.isInIframe()) {
+			this.iframeCommunication.sendHighScore(payload);
 		}
 	}
 

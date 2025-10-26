@@ -1007,30 +1007,118 @@
 @include mixins.respond-to-ultra-low-height() {
 	// 超低高度横屏：≤480px（覆盖iPhone 17 Pro Max及类似设备）
 	
-	// 只调整位置，保持原有样式
+	// 调整位置和尺寸，减少重叠
 	.floating-dock-container {
-		bottom: 12px;
+		bottom: 8px;
 		left: 8px;
 	}
 	
 	.floating-stats-container {
-		bottom: 12px;
+		bottom: 8px;
 		right: 8px;
+	}
+	
+	// 减小 dock 元素尺寸
+	.floating-dock {
+		gap: 6px;
+		padding: 10px 12px;
+		
+		.dock-button {
+			width: 42px;
+			height: 42px;
+			border-radius: 14px;
+			
+			i {
+				font-size: 18px;
+			}
+		}
+		
+		.dock-separator {
+			height: 28px;
+		}
+	}
+	
+	// 减小 stats 元素尺寸
+	.floating-stats {
+		gap: 12px;
+		padding: 10px 12px;
+		
+		.stat-item {
+			padding: 6px 10px;
+			gap: 6px;
+			
+			i {
+				font-size: 14px;
+			}
+			
+			.stat-label {
+				font-size: 12px;
+			}
+		}
+	}
+	
+	// 为 board 添加底部安全区域
+	.board {
+		padding-bottom: 50px;
 	}
 }
 
 @include mixins.respond-to-extreme-low-height() {
 	// 极端低高度横屏：≤420px（比iPhone 17 Pro Max稍小的设备）
 	
-	// 更激进的位置调整，保持原有样式
+	// 更激进的位置和尺寸调整
 	.floating-dock-container {
 		bottom: 6px;
-		left: 4px;
+		left: 6px;
 	}
 	
 	.floating-stats-container {
 		bottom: 6px;
-		right: 4px;
+		right: 6px;
+	}
+	
+	// 极小尺寸 dock 元素
+	.floating-dock {
+		gap: 4px;
+		padding: 8px 10px;
+		
+		.dock-button {
+			width: 36px;
+			height: 36px;
+			border-radius: 12px;
+			
+			i {
+				font-size: 16px;
+			}
+		}
+		
+		.dock-separator {
+			height: 24px;
+		}
+	}
+	
+	// 极小尺寸 stats 元素
+	.floating-stats {
+		gap: 8px;
+		padding: 8px 10px;
+		
+		.stat-item {
+			padding: 4px 8px;
+			gap: 4px;
+			
+			i {
+				font-size: 12px;
+			}
+			
+			.stat-label {
+				font-size: 11px;
+			}
+		}
+	}
+	
+	// 更大的 board 底部安全区域
+	.board {
+		padding-bottom: 60px;
 	}
 }
 

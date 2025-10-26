@@ -53,6 +53,17 @@ export interface Layouts {
 export interface LayoutScoreStore {
 	playCount?: number;
 	bestTime?: number;
+	firstWinTime?: number;
+	averageTime?: number;
+	recentTimes?: Array<number>;
+	perfectGames?: number;
+	modeTimes?: {
+		[mode in GAME_MODE_ID]?: {
+			bestTime?: number;
+			playCount?: number;
+			perfectGames?: number;
+		};
+	};
 }
 
 export interface StorageProvider {
